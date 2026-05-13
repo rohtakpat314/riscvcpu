@@ -16,7 +16,7 @@ All code is written by myself.
 During the coding process, I used a diagram to help me understand the inputs and outputs for each module. 
 For learning more Verilog syntax, I referenced [HDLBits](https://hdlbits.01xz.net/wiki/Main_Page). 
 
-For the Logisim and diagram basis, I referenced "Chuck's Tech Talk" on YouTube, which you can find [here](https://youtu.be/Z7LHCMTc0gI?si=A58NFnOHnKUldpkI). 
+For the Logisim and diagram basis, I referenced "[Chuck's Tech Talk]([url](https://youtu.be/Z7LHCMTc0gI?si=A58NFnOHnKUldpkI))" on YouTube. 
 
 Finally, I used _Computer Organization and Design RISC-V Edition_ by David A. Patterson and John L. Hennessy, frequently referencing Chapter 2 and 4, 
 along with Diagrams 4.9-4.11 for a clearer model of how to design the CPU and code it, along with understanding the functionality.
@@ -24,3 +24,5 @@ along with Diagrams 4.9-4.11 for a clearer model of how to design the CPU and co
 Last but not least, I referenced the RV32I Reference Card online (available in this repo + open-source) for a cheat sheet into the instructions and their entire 32-bit format, 
 so I knew how to wire things together, contract my digital logic into simpler, more elegant circuits, and finally to help with the immediate generator because of the 
 many different formats that the imm_gen has depending on whether the instruction is S-type, I-type, R-type, etc.
+
+I will create a PDF with all resources I've used all-in-all, for anyone who is interested upon completing the project. 
