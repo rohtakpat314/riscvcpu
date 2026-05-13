@@ -7,4 +7,4 @@ Day 2: researched RV32I, datapath, control logic, and microarchitecture
 
 Day 3: designed a fully functinal register file (reg_file.sv) --> still need to make a testbench (reg_file_tb.sv), which will be created tomorrow.
 
-Day 4: goal -- finish the reg_file_tb.sv and create a fully functioning program counter
+Day 4: finishde pc and instruction memory components for single-cycle 
