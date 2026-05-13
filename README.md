@@ -5,9 +5,9 @@ Day 1: defined the instruction subset
 
 Day 2: researched RV32I, datapath, control logic, and microarchitecture 
 
-Day 3: designed a fully functinal register file (reg_file.sv) --> still need to make a testbench (reg_file_tb.sv), which will be created tomorrow.
+Day 3: designed a fully functinal register file (reg_file.sv) --> still need to make a testbench (reg_file_tb.sv), which will be created soon
 
-Day 4: finished pc and instruction memory components for single-cycle 
+Day 4: finished progrma counter and instruction memory components for the single-cycle design
 
 
 
