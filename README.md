@@ -9,7 +9,7 @@ Day 3: designed a fully functinal register file (reg_file.sv) --> still need to 
 
 Day 4: finished progrma counter and instruction memory components for the single-cycle design
 
-
+Day 5: started ALU code, still unfinished as I have to review control unit logic more and carry logic
 
 All code is written by myself. 
 
