@@ -12,6 +12,6 @@ initial begin
     $readmemh("program.hex", memory); // read a hex file and load it into memory 
 end
 
-assign instr = memory[pc[11:2]]; // since depth = 1024, 2^10 = 1024, so [11:2] is sufficient 
+assign instruction = memory[pc[11:2]]; // since depth = 1024, 2^10 = 1024, so [11:2] is sufficient 
 
 endmodule 

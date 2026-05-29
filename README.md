@@ -1,28 +1,57 @@
-# CPU 
-A custom CPU, built ground-up, using the RISC-V 32-bit instruction set architecture, of which I chose a 16 instruction subset. As I continue working on this daily over the summer, I will make weekly updates (or less than weekly :) ).
+# RV32I Single-Cycle CPU
 
-Day 1: defined the instruction subset 
+A single-cycle RISC-V CPU implementing the full RV32I base integer instruction 
+set, built from ground up in SystemVerilog. 
 
-Day 2: researched RV32I, datapath, control logic, and microarchitecture 
+## Architecture
 
-Day 3: designed a fully functinal register file (reg_file.sv) --> still need to make a testbench (reg_file_tb.sv), which will be created soon
+The CPU implements a single-cycle datapath. Every instruction fetches, decodes, 
+executes, and writes back within one clock cycle. All 47 RV32I base instructions 
+are supported across all 6 instruction formats. Please refer to rohtak-patwardhan-rv32i.pdf for more. 
 
-Day 4: finished progrma counter and instruction memory components for the single-cycle design
+## Modules
 
-Day 5: started ALU code, still unfinished as I have to review control unit logic more and carry logic
+| Module | Description |
+|---|---|
+| `pc.sv` | 32-bit program counter with synchronous reset |
+| `instruction_mem.sv` | Read-only instruction memory, loads program from `.hex` file |
+| `reg_file.sv` | 32x32 register file, 2 read ports, 1 write port, x0 hardwired to 0 |
+| `alu.sv` | 32-bit ALU supporting all RV32I arithmetic, logical, and shift operations |
+| `imm_gen.sv` | Immediate generator. Decodes all 5 immediate formats with sign extension |
+| `control_unit.sv` | Decodes opcode/funct3/funct7 into datapath control signals |
+| `data_mem.sv` | Data memory with full byte/half-word/word read and write support |
+| `top.sv` | Top-level datapath, connects all modules and implements mux logic |
 
-All code is written by myself. 
+## Instruction Support
 
-During the coding process, I used a diagram to help me understand the inputs and outputs for each module. 
-For learning more Verilog syntax, I referenced [HDLBits](https://hdlbits.01xz.net/wiki/Main_Page). 
+- **R-type:** ADD, SUB, XOR, OR, AND, SLL, SRL, SRA, SLT, SLTU
+- **I-type:** ADDI, XORI, ORI, ANDI, SLLI, SRLI, SRAI, SLTI, SLTIU, LB, LH, LW, LBU, LHU, JALR
+- **S-type:** SB, SH, SW
+- **B-type:** BEQ, BNE, BLT, BGE, BLTU, BGEU
+- **U-type:** LUI, AUIPC
+- **J-type:** JAL
 
-For the Logisim and diagram basis, I referenced "[Chuck's Tech Talk](https://youtu.be/Z7LHCMTc0gI?si=A58NFnOHnKUldpkI)" on YouTube. 
+## File Structure
 
-Finally, I used _Computer Organization and Design RISC-V Edition_ by David A. Patterson and John L. Hennessy, frequently referencing Chapter 2 and 4, 
-along with Diagrams 4.9-4.11 for a clearer model of how to design the CPU and code it, along with understanding the functionality.
+```
+riscv32i/
+├── src/          # RTL source files
+├── tb/           # Testbenches
+├── sim/          # Simulation output
+└── docs/         # Reference documents
+```
 
-Last but not least, I referenced the RV32I Reference Card online (available in this repo + open-source) for a cheat sheet into the instructions and their entire 32-bit format, 
-so I knew how to wire things together, contract my digital logic into simpler, more elegant circuits, and finally to help with the immediate generator because of the 
-many different formats that the imm_gen has depending on whether the instruction is S-type, I-type, R-type, etc.
+## Resources
 
-I will create a PDF with all resources I've used all-in-all, for anyone who is interested upon completing the project. 
+All code is written independently. The following resources were referenced 
+throughout the design and implementation process:
+
+- _Computer Organization and Design RISC-V Edition_ by Patterson & Hennessy —
+  primarily Chapter 2 and 4, and Diagrams 4.9–4.11 for datapath design
+- [HDLBits](https://hdlbits.01xz.net/wiki/Main_Page) — for SystemVerilog syntax
+- [Chuck's Tech Talk](https://youtu.be/Z7LHCMTc0gI) — for Logisim diagrams and
+  microarchitecture visualization
+- RV32I Reference Card — available in `docs/`, used for instruction encoding and
+  immediate format reference
+
+Rohtak Patwardhan, 2026 

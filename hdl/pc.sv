@@ -3,7 +3,8 @@ module pc(pc_in, pc_out, clk, rst);
 parameter addr_length = 32; // 32-bit address
 
 input [addr_length-1:0] pc_in; 
-output reg [addr_length-1:0] pc_out;
+output reg [addr_length-1:0] pc_out;  
+input clk, rst; 
 
 always @(posedge clk) begin
     if (rst) 
