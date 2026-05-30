@@ -28,8 +28,7 @@ and applications of this CPU, because it's cool knowing all that it can do.
 
 Anyway, I'm going to sign off for tonight since it's 4:06 AM and my body needs some sleep.
 If anyone has any questions, please reach out at rohtak.pat314@gmail.com and I will be 
-answering them ASAP. If anyone sees any bugs, has any code recommendations, or wants to join this project and help with designing the further stages, please contact me and we 
-can work something out.
+answering them ASAP. If anyone sees any bugs, has any code recommendations, etc, feel free to contact me. 
 
 
 p.s. ill add the download info, tools I used / how I used them, and the simulation instructions soon so that you can easily follow this 
