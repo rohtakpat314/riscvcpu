@@ -49,7 +49,7 @@ localparam [6:0] AUIPC = 7'b0010111;  // U: AUIPC
 localparam [6:0] JAL = 7'b1101111;  // J: JAL
 
 // ── Immediate decode ─────────────────────────────────────────────────────────
-always_comb begin
+always @(*) begin
     imm = 32'b0;
     fmt = FMT_R;
 

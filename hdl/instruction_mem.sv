@@ -3,8 +3,9 @@ module instruction_mem(clk, pc, instruction);
 parameter instr_length = 32;
 parameter pc_length = 32;
 
-input [pc_length-1:0] pc; 
-output [instr_length-1:0] instruction; 
+input clk;
+input [pc_length-1:0] pc;
+output [instr_length-1:0] instruction;
 
 reg [31:0] memory [0:1023]; // memory is 32x32 = 1024
 

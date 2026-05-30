@@ -11,6 +11,12 @@ output [width-1:0] reg1, reg2; // two read ports on RV32I register file
 
 reg [width-1:0] reg_filex [depth-1:0];
 
+integer i;
+initial begin
+    for (i = 0; i < depth; i = i + 1)
+        reg_filex[i] = 0;
+end
+
 always @(posedge clk) // positive-edge triggered 
 begin 
     if(write_en && write_addr != 0) // RISC-V architecture states x0 is hardwired to 0

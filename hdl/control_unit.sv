@@ -47,7 +47,7 @@ function automatic [3:0] branch_alu_ctrl(input logic [2:0] f3);
 endfunction
 
 // Control signal selection 
-always_comb begin
+always @(*) begin
     // Safe defaults: no-op, no memory access, no writeback
     reg_write   = 1'b0;
     alu_control = ALU_ADD;
@@ -80,47 +80,47 @@ always_comb begin
         end
 
         LOAD: begin                 // I-type load (LB LH LW LBU LHU)
-            reg_write   = 1'b1;
-            alu_src     = 1'b1;
-            mem_read    = 1'b1;
-            mem_to_reg  = 2'b01;   // write back data read from memory
+            reg_write = 1'b1;
+            alu_src = 1'b1;
+            mem_read = 1'b1;
+            mem_to_reg = 2'b01;   // write back data read from memory
             alu_control = ALU_ADD; // effective address = rs1 + imm
         end
 
         STORE: begin                // S-type (SB SH SW)
-            alu_src     = 1'b1;
-            mem_write   = 1'b1;
+            alu_src = 1'b1;
+            mem_write = 1'b1;
             alu_control = ALU_ADD; // effective address = rs1 + imm
         end
 
         BRANCH: begin               // B-type (BEQ BNE BLT BGE BLTU BGEU)
-            branch      = 1'b1;
+            branch = 1'b1;
             alu_control = branch_alu_ctrl(funct3);
         end
 
         JAL_OP: begin               // J-type
-            reg_write  = 1'b1;
-            jal        = 1'b1;
+            reg_write = 1'b1;
+            jal = 1'b1;
             mem_to_reg = 2'b10;    // rd = PC+4 (return address)
         end
 
         JALR_OP: begin              // I-type (JALR)
-            reg_write   = 1'b1;
-            alu_src     = 1'b1;
-            jalr        = 1'b1;
-            mem_to_reg  = 2'b10;   // rd = PC+4 (return address)
+            reg_write = 1'b1;
+            alu_src = 1'b1;
+            jalr = 1'b1;
+            mem_to_reg = 2'b10;   // rd = PC+4 (return address)
             alu_control = ALU_ADD; // jump target = rs1 + imm (LSB cleared by datapath)
         end
 
         LUI_OP: begin               // U-type
             reg_write = 1'b1;
-            lui       = 1'b1;      // imm_gen already produced u_imm; write directly to rd
+            lui = 1'b1;      // imm_gen already produced u_imm; write directly to rd
         end
 
         AUIPC_OP: begin             // U-type
-            reg_write   = 1'b1;
-            alu_src     = 1'b1;
-            alu_a_pc    = 1'b1;    // A = PC, B = u_imm → rd = PC + u_imm
+            reg_write = 1'b1;
+            alu_src = 1'b1;
+            alu_a_pc = 1'b1;    // A = PC, B = u_imm → rd = PC + u_imm
             alu_control = ALU_ADD;
         end
 
