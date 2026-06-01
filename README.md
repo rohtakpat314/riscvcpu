@@ -31,16 +31,6 @@ are supported across all 6 instruction formats. Please refer to rohtak-patwardha
 - **U-type:** LUI, AUIPC
 - **J-type:** JAL
 
-## File Structure
-
-```
-riscv32i/
-├── src/          # RTL source files
-├── tb/           # Testbenches
-├── sim/          # Simulation output
-└── docs/         # Reference documents
-```
-
 ## Resources
 
 All code is written independently. The following resources were referenced 
