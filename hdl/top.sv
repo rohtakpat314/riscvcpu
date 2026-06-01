@@ -1,9 +1,8 @@
-// Single-cycle RV32I CPU top-level datapath
+module top(clk, rst, result);
 
-module top(clk, rst);
-
-input logic clk;
-input logic rst;
+input  logic        clk;
+input  logic        rst;
+output logic [31:0] result;
 
 // PC signals
 logic [31:0] pc_out, pc_in, pc_plus4;
@@ -101,5 +100,6 @@ data_mem u_dmem (
     .addr(alu_result), .write_data(rs2_data),
     .funct3(funct3_out), .read_data(mem_read_data)
 );
+assign result = alu_result;
 
 endmodule

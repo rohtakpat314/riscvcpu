@@ -30,7 +30,7 @@ always @(*) begin
         ADD: {carry, result} = {1'b0, a} + {1'b0, b}; // zero-extend the a & b values to support 33-bit addition & make use of the carry bit 
         SUB: result = a - b;
         OR: result = a | b;
-        AND: result = a & b; 
+        AND: result = a & b;
         XOR: result = a ^ b;
         SLL: result = a << b[4:0]; // << point to the left indicate SL 
         SRL: result = a >> b[4:0];

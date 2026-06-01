@@ -53,7 +53,7 @@ end
  * Code below allows for zero-extended OR sign-extended reading from 4 different bytes of the 32-bit data word 
  * Finally, can also just read the entire 32-bit data word 
  *
- * updated, 5/29/26 
+ * updated, 5/30/26 
  */ 
 
 always @(*) begin
