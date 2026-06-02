@@ -26,7 +26,7 @@ are supported across all 6 instruction formats. Please refer to [rohtak-patwardh
 
 ## Synthesis
 
-- **Board:** Quartus Cyclone V 5CGXFC7C7F23C8
+- **Board:** Quartus Cyclone V 5CGXFC7C7F23C8N
 - **Fmax:** 60.42 MHz
 - **Critical-Path Delay:** 16.55ns
 - **Combinational ALUT Ct.:** 1562 
