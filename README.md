@@ -2,7 +2,7 @@
 <img src="banner.png" alt="RV32IM Single-Cycle CPU">
 </p>
 
-<h1 align="center">RV32I Single-Cycle CPU</h1>
+<h1 align="center">RV32IM Single-Cycle CPU</h1>
 
 <p align="center">
 A complete RV32IM single-cycle CPU implemented from scratch in SystemVerilog.
