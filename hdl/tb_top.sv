@@ -20,44 +20,24 @@ initial begin
     repeat(2) @(posedge clk);
     #1 rst = 0;
 
-    repeat(20) @(posedge clk);
+    repeat(45) @(posedge clk);
 
-    // x3 = mul(6,7)  = 42
-    if (dut.u_regfile.reg_filex[3] !== 32'd42)
-        $display("FAIL x3 (MUL 6*7): got %0d, expected 42", dut.u_regfile.reg_filex[3]);
+    // x1 = fib(7) = 13, x2 = fib(8) = 21
+    if (dut.u_regfile.reg_filex[1] !== 32'd13)
+        $display("FAIL x1: got %0d, expected 13", dut.u_regfile.reg_filex[1]);
+    if (dut.u_regfile.reg_filex[2] !== 32'd21)
+        $display("FAIL x2: got %0d, expected 21", dut.u_regfile.reg_filex[2]);
 
-    // x7 = div(6,7)  = 0
-    if (dut.u_regfile.reg_filex[7] !== 32'd0)
-        $display("FAIL x7 (DIV 6/7): got %0d, expected 0", dut.u_regfile.reg_filex[7]);
-
-    // x9 = div(20,7) = 2
-    if (dut.u_regfile.reg_filex[9] !== 32'd2)
-        $display("FAIL x9 (DIV 20/7): got %0d, expected 2", dut.u_regfile.reg_filex[9]);
-
-    // x10 = rem(20,7) = 6
-    if (dut.u_regfile.reg_filex[10] !== 32'd6)
-        $display("FAIL x10 (REM 20%%7): got %0d, expected 6", dut.u_regfile.reg_filex[10]);
-
-    // x11 = div(6,0) = 0xFFFFFFFF (divide by zero)
-    if (dut.u_regfile.reg_filex[11] !== 32'hFFFFFFFF)
-        $display("FAIL x11 (DIV by zero): got %08h, expected ffffffff", dut.u_regfile.reg_filex[11]);
-
-    $display("simulation done.");
-    $display("x3=MUL(6,7)=%0d  x5=MUL(-1,7)=%08h  x6=MULH(-1,7)=%08h",
-        dut.u_regfile.reg_filex[3],
-        dut.u_regfile.reg_filex[5],
-        dut.u_regfile.reg_filex[6]);
-    $display("x7=DIV(6,7)=%0d  x9=DIV(20,7)=%0d  x10=REM(20,7)=%0d  x11=DIV(6,0)=%08h",
-        dut.u_regfile.reg_filex[7],
-        dut.u_regfile.reg_filex[9],
-        dut.u_regfile.reg_filex[10],
-        dut.u_regfile.reg_filex[11]);
+    $display("simulation done. x1=%0d x2=%0d", dut.u_regfile.reg_filex[1], dut.u_regfile.reg_filex[2]);
     $finish;
 end
 
 initial begin
     $dumpfile("tb_top.vcd");
     $dumpvars(0, tb_top);
+
+    $dumpvars(0, dut.u_regfile.reg_filex[1]);
+    $dumpvars(0, dut.u_regfile.reg_filex[2]);
 end
 
 integer cyc;
@@ -66,17 +46,14 @@ initial cyc = 0;
 always @(posedge clk) begin
     #1;
     cyc = cyc + 1;
-    $display("cyc %2d | PC=%08h instr=%08h | x3=%3d x5=%08h x6=%08h x7=%0d x9=%0d x10=%0d x11=%08h",
+    $display("cyc %2d | PC=%08h instr=%08h | x1=%2d x2=%2d x3=%2d x4=%2d",
         cyc,
         dut.pc_out,
         dut.instruction,
+        dut.u_regfile.reg_filex[1],
+        dut.u_regfile.reg_filex[2],
         dut.u_regfile.reg_filex[3],
-        dut.u_regfile.reg_filex[5],
-        dut.u_regfile.reg_filex[6],
-        dut.u_regfile.reg_filex[7],
-        dut.u_regfile.reg_filex[9],
-        dut.u_regfile.reg_filex[10],
-        dut.u_regfile.reg_filex[11]
+        dut.u_regfile.reg_filex[4]
     );
 end
 
