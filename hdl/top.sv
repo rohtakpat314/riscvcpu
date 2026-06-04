@@ -20,7 +20,7 @@ logic [2:0] fmt;
 
 // control signals
 logic reg_write;
-logic [3:0] alu_control;
+logic [4:0] alu_control;
 logic alu_src;
 logic alu_a_pc;
 logic lui;

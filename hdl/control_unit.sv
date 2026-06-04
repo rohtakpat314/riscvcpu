@@ -7,7 +7,7 @@ input  logic [2:0] funct3;
 input  logic [6:0] funct7;
 
 output logic       reg_write;   // enable write to rd
-output logic [3:0] alu_control; // operation select
+output logic [4:0] alu_control; // operation select
 output logic       alu_src;     // ALU B operand
 output logic       alu_a_pc;    // ALU A operand
 output logic       lui;         // LUI: bypass ALU, write imm directly to rd
@@ -19,10 +19,11 @@ output logic       jal;         // JAL:  rd=PC+4, PC=PC+imm
 output logic       jalr;        // JALR: rd=PC+4, PC=rs1+imm
 output logic [2:0] funct3_out;  // passed to datapath for branch condition and memory access width
 
-localparam [3:0] ALU_ADD  = 4'b0000;
-localparam [3:0] ALU_SUB  = 4'b1000;
-localparam [3:0] ALU_SLT  = 4'b0010;
-localparam [3:0] ALU_SLTU = 4'b0011;
+localparam [4:0] ALU_ADD  = 5'b00000;
+localparam [4:0] ALU_SUB  = 5'b01000;
+localparam [4:0] ALU_SLT  = 5'b00010;
+localparam [4:0] ALU_SLTU = 5'b00011;
+localparam [6:0] FUNCT7_M = 7'b0000001;
 
 // RV32I opcodes 
 localparam [6:0] OP       = 7'b0110011; // R: ADD SUB XOR OR AND SLL SRL SRA SLT SLTU
@@ -37,7 +38,7 @@ localparam [6:0] AUIPC_OP = 7'b0010111; // U: AUIPC
 localparam [6:0] JAL_OP   = 7'b1101111; // J: JAL
 
 // Branch -> ALU comparison mapping 
-function automatic [3:0] branch_alu_ctrl(input logic [2:0] f3);
+function automatic [4:0] branch_alu_ctrl(input logic [2:0] f3);
     case (f3)
         3'b000, 3'b001: branch_alu_ctrl = ALU_SUB;  // BEQ, BNE
         3'b100, 3'b101: branch_alu_ctrl = ALU_SLT;  // BLT, BGE
@@ -66,8 +67,10 @@ always @(*) begin
 
         OP: begin // R-type
             reg_write = 1'b1;
-            // funct7[5] distinguishes ADD/SUB and SRL/SRA: encoding directly matches ALU localparams
-            alu_control = {funct7[5], funct3};
+            if (funct7 == FUNCT7_M)
+                alu_control = {1'b1, 1'b0, funct3}; // M-extension: 5'b10_funct3
+            else
+                alu_control = {1'b0, funct7[5], funct3}; // RV32I: 5'b0_{funct7[5]}_funct3
         end
 
         OP_IMM: begin // I-type arithmetic
@@ -76,7 +79,7 @@ always @(*) begin
             // inst[30] (funct7[5]) is an immediate bit for all I-type except SRLI/SRAI (funct3=101)
             // only gate it through for the shift-right case to avoid treating a negative
             // immediate as a SUB or SRA incorrectly
-            alu_control = {funct7[5] & (funct3 == 3'b101), funct3};
+            alu_control = {1'b0, funct7[5] & (funct3 == 3'b101), funct3};
         end
 
         LOAD: begin                 // I-type load (LB LH LW LBU LHU)

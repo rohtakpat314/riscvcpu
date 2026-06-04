@@ -3,24 +3,33 @@ module alu(a, b, ALU_control, result, zero, overflow, lt, cout);
 parameter data_width = 32; 
 
 input [data_width-1:0] a, b; 
-output reg [data_width-1:0] result; 
-input [3:0] ALU_control;
-output zero, overflow, lt, cout; // either 1 or 0 (true or false) for each 
-reg carry; 
+output reg [data_width-1:0] result;
+input [4:0] ALU_control;
+output zero, overflow, lt, cout; // either 1 or 0 (true or false) for each
+reg carry;
+reg [63:0] mul64;
 
 
 // use the funct3 for bits [2:0], eliminating the need for a second decoding stage for ALU operation selection 
 
-localparam ADD = 4'b0000;
-localparam SUB = 4'b1000;
-localparam SLL = 4'b0001;
-localparam SLT = 4'b0010;
-localparam SLTU = 4'b0011;
-localparam XOR = 4'b0100;
-localparam SRL = 4'b0101;
-localparam SRA = 4'b1101;
-localparam OR = 4'b0110;
-localparam AND = 4'b0111;
+localparam ADD    = 5'b00000;
+localparam SUB    = 5'b01000;
+localparam SLL    = 5'b00001;
+localparam SLT    = 5'b00010;
+localparam SLTU   = 5'b00011;
+localparam XOR    = 5'b00100;
+localparam SRL    = 5'b00101;
+localparam SRA    = 5'b01101;
+localparam OR     = 5'b00110;
+localparam AND    = 5'b00111;
+localparam MUL    = 5'b10000;
+localparam MULH   = 5'b10001;
+localparam MULHSU = 5'b10010;
+localparam MULHU  = 5'b10011;
+localparam DIV    = 5'b10100;
+localparam DIVU   = 5'b10101;
+localparam REM    = 5'b10110;
+localparam REMU   = 5'b10111;
 
 
 always @(*) begin
@@ -37,6 +46,14 @@ always @(*) begin
         SRA: result = $signed(a) >>> b[4:0];
         SLTU: result = (a < b) ? 32'b1 : 32'b0;
         SLT: result = ($signed(a) < $signed(b)) ? 32'b1 : 32'b0; // returns true or false 
+        MUL:    begin mul64 = $signed({{32{a[31]}},a}) * $signed({{32{b[31]}},b}); result = mul64[31:0]; end
+        MULH:   begin mul64 = $signed({{32{a[31]}},a}) * $signed({{32{b[31]}},b}); result = mul64[63:32]; end
+        MULHSU: begin mul64 = $signed({{32{a[31]}},a}) * {33'b0, b[31:0]}; result = mul64[63:32]; end
+        MULHU:  begin mul64 = {32'b0,a} * {32'b0,b}; result = mul64[63:32]; end
+        DIV:    result = (b==0) ? 32'hFFFFFFFF : $signed(a) / $signed(b);
+        DIVU:   result = (b==0) ? 32'hFFFFFFFF : a / b;
+        REM:    result = (b==0) ? a : $signed(a) % $signed(b);
+        REMU:   result = (b==0) ? a : a % b;
         default: result = 32'b0;
     endcase
 end
@@ -63,8 +80,7 @@ assign cout = carry;
  */ 
 
 // 5/25/26 : updated overflow logic for SUB so that the SUB case was taken care of, which is pos - (neg) and neg - (pos) 
-assign overflow = ((ALU_control == ADD) &&
-    (a[31] == b[31]) &&
-    (result[31] != a[31])) || ((ALU_control == SUB) && (a[31] != b[31]) && (result[31] != a[31]));
+assign overflow = ((ALU_control == ADD) && (a[31] == b[31]) && (result[31] != a[31])) ||
+                  ((ALU_control == SUB) && (a[31] != b[31]) && (result[31] != a[31]));
 
 endmodule 
