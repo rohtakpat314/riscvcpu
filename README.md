@@ -55,6 +55,14 @@ are supported across all 6 instruction formats. Please refer to [rohtak-patwardh
 - **U-type:** LUI, AUIPC
 - **J-type:** JAL
 
+## Waveforms
+
+**RV32M Extension — MUL, DIV, REM verification**
+![RV32M Waveform](docs/RV32M_extension_waveform.png)
+
+**RV32I — Fibonacci sequence (branch/loop verification)**
+![Fibonacci Waveform](docs/RV32I_fibonacci_sequence.png)
+
 ## Resources
 
 All code is written independently. The following resources were referenced 
