@@ -1,11 +1,11 @@
 <p align="center">
-<img src="banner.png" alt="RV32I Single-Cycle CPU">
+<img src="banner.png" alt="RV32IM Single-Cycle CPU">
 </p>
 
 <h1 align="center">RV32I Single-Cycle CPU</h1>
 
 <p align="center">
-A complete RV32I single-cycle CPU implemented from scratch in SystemVerilog.
+A complete RV32IM single-cycle CPU implemented from scratch in SystemVerilog.
 </p>
 
 <p align="center">
@@ -17,12 +17,12 @@ A complete RV32I single-cycle CPU implemented from scratch in SystemVerilog.
 
 ## Overview 
 
-A single-cycle RISC-V CPU implementing the full RV32I base integer instruction 
-set, built from ground up in SystemVerilog. Each instruction completes in one clock cycle.
+A single-cycle RISC-V CPU implementing the full RV32IM instruction set, built from ground up in SystemVerilog. Each instruction completes in one clock cycle.
 
 The CPU implements a single-cycle datapath. Every instruction fetches, decodes, 
 executes, and writes back within one clock cycle. All 47 RV32I base instructions 
-are supported across all 6 instruction formats. Please refer to [rohtak-patwardhan-rv32i.pdf](rohtak-patwardhan-rv32i.pdf) for more.
+are supported across all 6 instruction formats. All additional 8 RV32M instructions supported.
+Please refer to [rohtak-patwardhan-rv32i.pdf](rohtak-patwardhan-rv32i.pdf) for more.
 
 ## Synthesis
 
@@ -54,6 +54,7 @@ are supported across all 6 instruction formats. Please refer to [rohtak-patwardh
 - **B-type:** BEQ, BNE, BLT, BGE, BLTU, BGEU
 - **U-type:** LUI, AUIPC
 - **J-type:** JAL
+- **M-extension:** MUL, MULH, MULHSU, MULHU, DIV, DIVU, REM, REMU
 
 ## Waveforms
 
