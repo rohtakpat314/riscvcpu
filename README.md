@@ -1,13 +1,37 @@
-# RV32I Single-Cycle CPU
+<p align="center">
+<img src="banner.png" alt="RV32I Single-Cycle CPU">
+</p>
+
+<h1 align="center">RV32I Single-Cycle CPU</h1>
+
+<p align="center">
+A complete RV32I single-cycle CPU implemented from scratch in SystemVerilog.
+</p>
+
+<p align="center">
+<img src="https://img.shields.io/badge/SystemVerilog-100%25-blue" alt="SystemVerilog">
+<img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+<img src="https://img.shields.io/badge/status-complete-success" alt="Status">
+<img src="https://img.shields.io/badge/FPGA-Cyclone%20V-orange" alt="Platform">
+</p>
+
+## Overview 
 
 A single-cycle RISC-V CPU implementing the full RV32I base integer instruction 
-set, built from ground up in SystemVerilog. 
-
-## Architecture
+set, built from ground up in SystemVerilog. Each instruction completes in one clock cycle.
 
 The CPU implements a single-cycle datapath. Every instruction fetches, decodes, 
 executes, and writes back within one clock cycle. All 47 RV32I base instructions 
-are supported across all 6 instruction formats. Please refer to rohtak-patwardhan-rv32i.pdf for more. 
+are supported across all 6 instruction formats. Please refer to [rohtak-patwardhan-rv32i.pdf](rohtak-patwardhan-rv32i.pdf) for more.
+
+## Synthesis
+
+- **Board:** Quartus Cyclone V 5CGXFC7C7F23C8N
+- **Fmax:** 60.42 MHz
+- **Critical-Path Delay:** 16.55ns
+- **Combinational ALUT Ct.:** 1562 
+- **Number of Adaptive Logic Modules (ALMs):** 2081 (~4% of board)
+- **Dynamic Power:** 52mW
 
 ## Modules
 
@@ -38,10 +62,9 @@ throughout the design and implementation process:
 
 - _Computer Organization and Design RISC-V Edition_ by Patterson & Hennessy —
   primarily Chapter 2 and 4, and Diagrams 4.9–4.11 for datapath design
-- [HDLBits](https://hdlbits.01xz.net/wiki/Main_Page) — for SystemVerilog syntax
-- [Chuck's Tech Talk](https://youtu.be/Z7LHCMTc0gI) — for Logisim diagrams and
+- [HDLBits](https://hdlbits.01xz.net/wiki/Main_Page) - for SystemVerilog syntax
+- [Chuck's Tech Talk](https://youtu.be/Z7LHCMTc0gI) - for Logisim diagrams and
   microarchitecture visualization
-- RV32I Reference Card — available in `docs/`, used for instruction encoding and
-  immediate format reference
+- [RISCV_CARD.pdf](RISCV_CARD.pdf) — used for instruction encoding and immediate format reference
 
 Rohtak Patwardhan, 2026 
