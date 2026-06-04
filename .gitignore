@@ -7,3 +7,9 @@ simulation/
 *.qdb
 *.qsys
 c5_pin_model_seq/
+*.bak
+*.wlf
+*.qws
+transcript
+c5_pin_model_dump.txt
+top_description.txt
