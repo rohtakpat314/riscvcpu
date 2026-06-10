@@ -7,7 +7,13 @@ output reg [data_width-1:0] result;
 input [4:0] ALU_control;
 output zero, overflow, lt, cout; // either 1 or 0 (true or false) for each
 reg carry;
-reg [63:0] mul64;
+// Multiply results. Operands are kept at their NATIVE 32-bit width and the
+// product is widened by the assignment context (LHS width). This lets Quartus
+// recognize a 32x32->64 multiply and map it onto hardware DSP blocks, instead
+// of building a 64x64 multiplier in soft logic (the previous code sign-extended
+// the operands to 64 bits first, which inferred 0 DSPs).
+reg [63:0] mul64;   // signed*signed and unsigned*unsigned 32x32 products
+reg [65:0] mul_su;  // signed*unsigned: 33x33 signed product (MULHSU)
 
 
 // use the funct3 for bits [2:0], eliminating the need for a second decoding stage for ALU operation selection 
@@ -46,10 +52,10 @@ always @(*) begin
         SRA: result = $signed(a) >>> b[4:0];
         SLTU: result = (a < b) ? 32'b1 : 32'b0;
         SLT: result = ($signed(a) < $signed(b)) ? 32'b1 : 32'b0; // returns true or false 
-        MUL:    begin mul64 = $signed({{32{a[31]}},a}) * $signed({{32{b[31]}},b}); result = mul64[31:0]; end
-        MULH:   begin mul64 = $signed({{32{a[31]}},a}) * $signed({{32{b[31]}},b}); result = mul64[63:32]; end
-        MULHSU: begin mul64 = $signed({{32{a[31]}},a}) * {33'b0, b[31:0]}; result = mul64[63:32]; end
-        MULHU:  begin mul64 = {32'b0,a} * {32'b0,b}; result = mul64[63:32]; end
+        MUL:    begin mul64  = $signed(a)        * $signed(b);          result = mul64[31:0];  end // signed x signed, low word
+        MULH:   begin mul64  = $signed(a)        * $signed(b);          result = mul64[63:32]; end // signed x signed, high word
+        MULHSU: begin mul_su = $signed({a[31],a}) * $signed({1'b0, b}); result = mul_su[63:32]; end // signed x unsigned, high word
+        MULHU:  begin mul64  = a * b;                                   result = mul64[63:32]; end // unsigned x unsigned, high word
         DIV:    result = (b==0) ? 32'hFFFFFFFF : $signed(a) / $signed(b);
         DIVU:   result = (b==0) ? 32'hFFFFFFFF : a / b;
         REM:    result = (b==0) ? a : $signed(a) % $signed(b);

@@ -12,4 +12,5 @@ c5_pin_model_seq/
 *.qws
 transcript
 c5_pin_model_dump.txt
-top_description.txt
+top_description.txt*.vvp
+lui_test.hex
