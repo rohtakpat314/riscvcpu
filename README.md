@@ -15,6 +15,10 @@ A complete RV32IM single-cycle CPU implemented from scratch in SystemVerilog.
 <img src="https://img.shields.io/badge/FPGA-Cyclone%20V-orange" alt="Platform">
 </p>
 
+## Further Documentation, for those interested
+
+https://rohtakpatwardhan.com/projects/riscv-cpu.html
+
 ## Overview 
 
 A single-cycle RISC-V CPU implementing the full RV32IM instruction set, built from ground up in SystemVerilog. Each instruction completes in one clock cycle.
