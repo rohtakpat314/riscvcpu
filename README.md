@@ -31,11 +31,10 @@ Please refer to [rohtak-patwardhan-rv32i.pdf](rohtak-patwardhan-rv32i.pdf) for m
 ## Synthesis
 
 - **Board:** Quartus Cyclone V 5CGXFC7C7F23C8N
-- **Fmax:** 60.42 MHz
-- **Critical-Path Delay:** 16.55ns
+- **Fmax:** 49.18 MHz
 - **Combinational ALUT Ct.:** 1562 
 - **Number of Adaptive Logic Modules (ALMs):** 2081 (~4% of board)
-- **Dynamic Power:** 52mW
+- **Dynamic Power:** 60mW
 
 ## Modules
 
